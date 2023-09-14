@@ -3,7 +3,11 @@ import tkinter as tk
 from tkinter import messagebox
 
 
-def click_button(ev):
+def press_enter_key(ev):
+    click_button()
+
+
+def click_button():
     try:
         r, c = map(int, en_row_column.get().split())
         matrix = np.random.randint(1, 101, size=(r, c))
@@ -13,7 +17,7 @@ def click_button(ev):
 
 
 window = tk.Tk()
-window.title('numpy gui version v1.6')
+window.title('numpy gui version v1.7')
 window.geometry('300x150')
 
 # create widget
@@ -22,7 +26,7 @@ en_row_column = tk.Entry()
 btn_click = tk.Button(text="click me!", command=click_button)
 
 # enter key binding with entry widget
-en_row_column.bind("<Return>", click_button)
+en_row_column.bind("<Return>", press_enter_key)
 
 # widget layout
 lbl_result.pack()
