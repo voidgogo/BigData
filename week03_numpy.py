@@ -5,6 +5,7 @@ from tkinter import messagebox
 
 def press_enter_key(ev):
     click_button()
+    messagebox.showinfo('x, y', f"({ev.x}, {ev.y})")
 
 
 def click_button():
