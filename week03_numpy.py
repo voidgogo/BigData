@@ -34,4 +34,6 @@ lbl_result.pack()
 en_row_column.pack(fill='x')
 btn_click.pack(fill='x')
 
+en_row_column.focus()
+
 window.mainloop()
