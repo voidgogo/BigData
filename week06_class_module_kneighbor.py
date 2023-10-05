@@ -4,7 +4,7 @@ import tkinter as tk
 from sklearn.neighbors import KNeighborsRegressor
 
 
-def predict_life_satisfaction():
+def predict_life_satisfaction(*ev):
     x = int(en_GDP_per_capita.get())
     X_new = [[x]]
 
@@ -12,7 +12,8 @@ def predict_life_satisfaction():
     X = life_satisfaction[["GDP per capita (USD)"]].values  # return 2d array
     y = life_satisfaction[["Life satisfaction"]].values  # return 2d array
 
-    print(life_satisfaction)
+    # print(life_satisfaction)
+
     # life_satisfaction.plot(kind='scatter', grid=True, x="GDP per capita (USD)", y="Life satisfaction")
     # plt.axis([23500, 62500, 4, 9])
     # plt.show()
@@ -26,7 +27,7 @@ def predict_life_satisfaction():
 
 if __name__ == "__main__":
     window = tk.Tk()
-    window.title("삶의 만족도 예측 프로그램 v0.3")
+    window.title("삶의 만족도 예측 프로그램 v0.4")
     window.geometry("400x150")
 
     lbl_life_satisfaction = tk.Label(window, text="아래 입력상자에 삶의 만족도를 알고 싶은\n국가의 1인당 GDP값을 입력해주세요")
@@ -36,5 +37,8 @@ if __name__ == "__main__":
     lbl_life_satisfaction.pack()
     en_GDP_per_capita.pack(fill='x')
     btn_predict.pack(fill='x')
+
+    en_GDP_per_capita.bind("<Return>", predict_life_satisfaction)
+    en_GDP_per_capita.focus()
 
     window.mainloop()
