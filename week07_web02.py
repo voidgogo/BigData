@@ -6,10 +6,9 @@ urls = urllib.request.urlopen(api).read()
 soup = BeautifulSoup(urls, 'html.parser')
 
 cities = soup.find_all("city")
-wfs = soup.find_all("wf")
-wfs.pop(0)  # 성능 이슈 있을 수 있음
+data = soup.find_all("data")
 
 for i in range(len(cities)):
-    print(f'{cities[i].string}의 날씨는 {wfs[i*13].string}입니다.')
+    print(f'{cities[i].string}의 중기 예보 첫 번째 날씨는 {data[i*13].find("wf").string}입니다.')
 
-print(len(cities), len(wfs))
+print(len(cities), len(data))
