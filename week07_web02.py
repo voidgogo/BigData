@@ -1,22 +1,15 @@
+import urllib.request
 from bs4 import BeautifulSoup
 
-html = """
-<html>
-<head>
-<title>스크레이핑 실습</title>
-</head>
-<body>
-<a href="http://www.daelim.ac.kr">대림대학교</a><br>
-<a href="http://www.harvard.edu">하버드대학교</a>
-</body>
-</html>
-"""
-soup = BeautifulSoup(html, 'html.parser')
-urls = soup.find_all("a")
-print(urls)
-for url in urls:
-    print(f'{url.string}의 url주소는 {url.attrs["href"]}입니다.')
-    # univ = url.string
-    # link = url.attrs['href']
-    # print(univ)
-    # print(link)
+api = 'https://www.kma.go.kr/weather/forecast/mid-term-rss3.jsp'
+urls = urllib.request.urlopen(api).read()
+soup = BeautifulSoup(urls, 'html.parser')
+
+cities = soup.find_all("city")
+wfs = soup.find_all("wf")
+wfs.pop(0)  # 성능 이슈 있을 수 있음
+
+for i in range(len(cities)):
+    print(f'{cities[i].string}의 날씨는 {wfs[i*13].string}입니다.')
+
+print(len(cities), len(wfs))
