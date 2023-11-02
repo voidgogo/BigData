@@ -1,14 +1,13 @@
 import numpy as np
-a = np.arange(1, 7).reshape(2, 3)
-b = np.array([
-    [5, 20],
-    [11, -1],
-    [9, 3]
+from numpy.linalg import inv
+# linalg == linear algebra
+np.random.seed()
+X = np.array([
+    [1, 2, 3],
+    [1, 0, 0],
+    [0, 0, 1]
 ])
-print(a)
-print(b)
-print()
-print(a.dot(b))
-print(np.dot(a, b))
-print(b.dot(a))
-print(np.dot(b, a))
+print(X)
+Z = inv(X)  # 역행렬
+print(Z)
+print(X.dot(Z))
