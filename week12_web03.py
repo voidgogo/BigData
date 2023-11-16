@@ -1,43 +1,26 @@
+import urllib.request
 from bs4 import BeautifulSoup
+import pandas as pd
+import datetime
 
-html = """
-<html>
-<head>
-<title>스크레이핑 실습</title>
-</head>
-<body>
-<a href="http://www.daelim.ac.kr">대림대학교</a><br>
-<a href="http://www.harvard.edu">하버드대학교</a><br>
-</body>
-</html>
-"""
-soup = BeautifulSoup(html, 'html.parser')
-urls = soup.find_all("a")  # return list
-print(urls)
-# 하버드대학교의 url주소는 http://www.harvard.edu입니다.
-for url in urls:
-    print("{0}의 주소는 {1}입니다.".format(url.string, url.attrs['href']))
+shops = list()
 
+for i in range(1, 52):
+    url = f"https://www.hollys.co.kr/store/korea/korStore2.do?pageNo={i}&sido=&gugun=&store="
+    print(url)
+    page = urllib.request.urlopen(url)
+    soup = BeautifulSoup(page, "html.parser")
+    tbody = soup.find('tbody')
+    trs = tbody.find_all('tr')
 
+    for tr in trs:
+        tds = tr.find_all('td')
+        shop_name = tds[1].string  # 매장명
+        shop_addr = tds[3].string  # 주소
+        shop_phone = tds[5].string  # 전화번호
 
-# from bs4 import BeautifulSoup
-#
-# html = """
-# <html>
-# <head>
-# <title>스크레이핑 실습</title>
-# </head>
-# <body>
-# <h1 id="univ">대림대학교</h1>
-# <p>웹스크레이핑</p>
-# <p id="contents">파이썬, 판다스, 넘파이, 맷플롯립, GUI...</p>
-# </body>
-# </html>
-# """
-# soup = BeautifulSoup(html, 'html.parser')
-# university = soup.find(id='univ')
-# contents = soup.find(id='contents')
-#
-# print(university)
-# print(contents.string)
-# print(contents)
+        shops.append([shop_name]+[shop_addr]+[shop_phone]+[datetime.datetime.now()])  # 2d list
+
+# print(shops)
+hollys_df = pd.DataFrame(shops, columns=('매장명', '주소', 'Tel', '일시'))
+hollys_df.to_csv('holly.csv', mode='w', encoding='cp949')
