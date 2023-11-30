@@ -1,15 +1,16 @@
+"""
+1) 생존자와 사망자 수를 구하시오.
+2) 남성과 여성의 생존률을 구하시오.
+
+"""
 import seaborn as sns
-import pandas as pd
 
 titanic = sns.load_dataset('titanic')
-#print(titanic.describe())
-#print(titanic.head(10))
-#print(titanic.tail(10))
+# print(titanic.info())
+# print(titanic.head())
 
-# 결측치 전처리
-print(titanic['age'].fillna(titanic['age'].median(), inplace=True))
-titanic['deck'] = titanic['deck'].cat.add_categories('Unknown')  # 카테고리 추가
-titanic['deck'].fillna('Unknown', inplace=True)
-titanic['embarked'].fillna('Unknown', inplace=True)
-titanic['embark_town'].fillna('Unknown', inplace=True)
-print(titanic.info())
+# survived_human = titanic[titanic["survived"] == 1]["survived"].count()
+# dead_human = titanic[titanic["survived"] == 0]["survived"].count()
+# print(f"생존자 수 : {survived_human}명")
+# print(f"사망자 수 : {dead_human}명")
+
